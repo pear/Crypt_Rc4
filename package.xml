@@ -14,12 +14,12 @@
     </maintainer>
   </maintainers>
   <release>
-    <version>1.0</version>
+    <version>1.0.1</version>
     <license>PHP</license>
     <state>stable</state>
-    <date>2002-12-11</date>
+    <date>2003-05-06</date>
     <notes>
-    	Final release of Crypt package. 
+    	Bugfix release: Salt key will be now kept. Also after running the crypt algorithm.
     </notes>
     <filelist>
      <dir name="/" baseinstalldir="Crypt">
