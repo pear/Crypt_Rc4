@@ -3,9 +3,9 @@
 <!-- do not use the "Type" attribute here, that one is only for
      generated package.xml files -->
 <package version="1.0">
-  <name>Crypt_Rc4</name>
+  <name>Crypt_RC4</name>
   <description>RC4 encryption class</description>
-  <summary>Encryption class for rc4 encryption</summary>
+  <summary>Encryption class for RC4 encryption</summary>
   <maintainers>
     <maintainer>
       <user>zyprexia</user>
@@ -14,12 +14,12 @@
     </maintainer>
   </maintainers>
   <release>
-    <version>1.0.1</version>
+    <version>1.0.2</version>
     <license>PHP</license>
     <state>stable</state>
     <date>2003-05-06</date>
     <notes>
-    	Bugfix release: Salt key will be now kept. Also after running the crypt algorithm.
+    	Bugfix release: This version should prevent/solve the problems with the undefined index with some pear installers
     </notes>
     <filelist>
      <dir name="/" baseinstalldir="Crypt">
