@@ -1,12 +1,7 @@
 <?php
 
 require_once( "PHPUnit2/Framework/TestCase.php" );
-
-/* TODO: Change back at release! */
-// require_once( "Crypt/Rc4.php" );
-require_once( "../Rc4.php");
-
-
+require_once( "Crypt/Rc4.php");
 
 //Unit test for PHP5 version of RC4
 class Rc4Test extends PHPUnit2_Framework_TestCase {
@@ -15,7 +10,6 @@ class Rc4Test extends PHPUnit2_Framework_TestCase {
 	
 	public function testSimpleEncryption()
 	{
-		
 		$rc4 = new Crypt_Rc4();
 		$rc4->key($this->_key);
 		$this->assertEquals('', $rc4->encrypt($this->_message));

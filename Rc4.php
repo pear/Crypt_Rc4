@@ -43,6 +43,15 @@
  * echo "Decrypted message: $message &lt;br /&gt;>\n";<br />
  * </code>
  *
+ * Another example using some of PHP5 new features
+ * <code>
+ * $message = "PEAR Rulez!";<br /><br />
+ *
+ * $rc4 = new Crypt_Rc4;<br />
+ * $rc4->key = "pear";<br />
+ * $message = $rc4->encrypt($message);<br />
+ * </code>
+ *
  * @category Crypt
  * @package Crypt
  * @author Dave Mertens <zyprexia@php.net>
@@ -133,24 +142,43 @@ final class Crypt_Rc4 {
      * @return void
      * @access public    
      */
-    public function key(&$key) 
+    public function key($key) 
     {
-        $len= strlen($key);
-        
-        //Create array matrix
-        for ($this->i = 0; $this->i < 256; $this->i++) {
-            $this->s[$this->i] = $this->i;
-    	}
-
-    //Initialize encryption matrix
-        $this->j = 0;
-        for ($this->i = 0; $this->i < 256; $this->i++) {
-            $this->j = ($this->j + $this->s[$this->i] + ord($key[$this->i % $len])) % 256;
-            $t = $this->s[$this->i];
-            $this->s[$this->i] = $this->s[$this->j];
-            $this->s[$this->j] = $t;
+        $this->initializeKey($key);
+    }
+    
+    
+    /**
+     * The only way for retrieving the encryption key
+     *
+     * @param string $property Only property 'key' is supported
+     * @return string Enecryption key 
+     * @access public
+     */
+    public function __get($property)
+    {
+        switch (strtolower($property)) {
+            case "key":
+                return $this->_key;
+                break;
         }
-        $this->i = $this->j = 0;
+    }
+    
+    /**
+     * Alternative way to set the encryption key
+     *
+     * @param string $property Only property 'key' is supported
+     * @param string $value Value for property
+     * @return void
+     * @access public
+     */
+    public function __set($property, $value)
+    {
+        switch (strtolower($property)) {
+            case "key":
+                return $this->initializeKey($value);
+                break;
+        }
     }
 
     // PROTECTED FUNCTIONS
@@ -166,7 +194,7 @@ final class Crypt_Rc4 {
     private function crypt($paramstr) 
     {
         //Init key for every call, Bugfix for PHP issue #22316
-        $this->key($this->_key);
+        $this->initializeKey($this->_key);
 
         //length of message
         $len= strlen($paramstr);
@@ -194,11 +222,37 @@ final class Crypt_Rc4 {
      * @return void
      * @access private
      */
-    private function setKey($key) 
+    private function initializeKey($key) 
     {
-        if (strlen($key) > 0)
-            $this->_key = $key;
-    }
+        //better string validation
+        if ( is_string($key) && strlen($key) > 0 ) {
+        
+            //Only initialize key if it's different
+            if ($key != $this->_key) {
+                    $this->_key = $key;
 
+                $len= strlen($key);
+        
+                //Create array matrix
+                for ($this->i = 0; $this->i < 256; $this->i++) {
+                        $this->s[$this->i] = $this->i;
+                }
+
+                //Initialize encryption matrix
+                $this->j = 0;
+                for ($this->i = 0; $this->i < 256; $this->i++) {
+                    $this->j = ($this->j + $this->s[$this->i] + ord($key[$this->i % $len])) % 256;
+                    $t = $this->s[$this->i];
+                    $this->s[$this->i] = $this->s[$this->j];
+                    $this->s[$this->j] = $t;
+                }
+                $this->i = $this->j = 0;
+            }
+        }
+        else {
+            //throw exception (which exception are available in php5 by default??)
+            //throw new Exception("Please provide an encryption key with more than character");
+        }
+    }
 }    //end of RC4 class
 ?>
