@@ -17,7 +17,7 @@
     <version>1.0.2</version>
     <license>PHP</license>
     <state>stable</state>
-    <date>2003-05-06</date>
+    <date>2003-10-20</date>
     <notes>
     	Bugfix release: This version should prevent/solve the problems with the undefined index with some pear installers
     </notes>
