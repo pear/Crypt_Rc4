@@ -20,117 +20,127 @@
 
 
 /**
-* RC4 stream cipher routines implementation. 
-*
-* in PHP5(!) based on code written by Damien Miller <djm@mindrot.org>
-* This class <b><u>BREAKS</u></b> with <b><u>COMPABILITY</u></b> with earlier PHP 4 version of the RC4 class. 
-* PHP 4 versions are available at http://pear.php.net/package/Crypt_RC4, download version 1.x
-* 
-*
-* Usage:<br />
-* $key = "pear";<br />
-* $message = "PEAR rulez!";<br />
-*
-* $rc4 = new Crypt_Rc4;<br />
-* $rc4->setKey($key);<br />
-* echo "Original message: $message &lt;br /&gt;\n";<br /><br />
-*
-* $message = $rc4->encrypt($message);<br />
-* echo "Encrypted message: $message &lt;br /&gt;\n";<br /><br />
-*
-* $message $rc4->decrypt($message);<br />
-* echo "Decrypted message: $message &lt;br /&gt;>\n";<br />
-*
-* @category Crypt
-* @package Crypt
-* @author Dave Mertens <zyprexia@php.net>
-* @version $Revision$
-* @access public
+ * RC4 stream cipher routines implementation. 
+ *
+ * in PHP5(!) based on code written by Damien Miller <djm@mindrot.org>
+ * This class <b><u>BREAKS</u></b> with <b><u>COMPABILITY</u></b> with earlier PHP 4 version of the RC4 class. 
+ * PHP 4 versions are available at http://pear.php.net/package/Crypt_RC4, download version 1.x
+ * 
+ *
+ * Usage:<br />
+ * <code>
+ * $key = "pear";<br />
+ * $message = "PEAR rulez!";<br />
+ *
+ * $rc4 = new Crypt_Rc4;<br />
+ * $rc4->setKey($key);<br />
+ * echo "Original message: $message &lt;br /&gt;\n";<br /><br />
+ *
+ * $message = $rc4->encrypt($message);<br />
+ * echo "Encrypted message: $message &lt;br /&gt;\n";<br /><br />
+ *
+ * $message $rc4->decrypt($message);<br />
+ * echo "Decrypted message: $message &lt;br /&gt;>\n";<br />
+ * </code>
+ *
+ * @category Crypt
+ * @package Crypt
+ * @author Dave Mertens <zyprexia@php.net>
+ * @version $Revision$
+ * @access public
  */
 
 final class Crypt_Rc4 {
 
     /**
-    * Contains salt key used by en(de)cryption function
-    * @var array
-    * @access private
-    */
+     * Contains salt key used by en(de)cryption function
+     *
+     * @var array
+     * @access private
+     */
     private $s= array();
     
     /**
-    * First Part of encryption matrix
-    * @var array
-    * @access private
-    */
+     * First Part of encryption matrix
+     *
+     * @var array
+     * @access private
+     */
     private $i= 0;
     
     /**
-    * Second part of encryption matrix
-    * @var array
-    * @access private
-    */
+     * Second part of encryption matrix
+     *
+     * @var array
+     * @access private
+     */
     private $j= 0;
 
     /**
-    * Used provided key for encryption. 
-    * @var string
-    * @access private
-    */
+     * Used provided key for encryption. 
+     *
+     * @var string
+     * @access private
+     */
     private $_key;
 
     /**
-    * Constructor for encryption class
-    * Pass encryption key to key()
-    *
-    * @see    setKey() 
-    * @param  string key Optional key which will be used for encryption
-    * @return void
-    * @access public
-    */
-    function __construct($key = null) {
+     * Constructor for encryption class
+     * Pass encryption key to key()
+     *
+     * @param  string $key a key which will be used for encryption
+     * @return void
+     * @access public
+     * @see    setKey() 
+     */
+    function __construct($key = null) 
+    {
         if ($key != null) {
             $this->setKey($key);
         }
     }
 
     /**
-    * Encrypt function
-    *
-    * @param  string paramstr string that will decrypted
-    * @return Encrypted string
-    * @access public    
-    */
-    public function encrypt($paramstr) {
+     * Encrypt function
+     *
+     * @param  string $paramstr string that will decrypted
+     * @return Encrypted string
+     * @access public    
+     */
+    public function encrypt($paramstr) 
+    {
         //Decrypt is exactly the same as encrypting the string. Reuse (en)crypt code
         return $this->crypt($paramstr);
     }
 
     /**
-    * Decrypt function
-    *
-    * @param  string paramstr string that will decrypted
-    * @return Decrypted string
-    * @access public    
-    */
-    public function decrypt($paramstr) {
+     * Decrypt function
+     *
+     * @param  string $paramstr string that will decrypted
+     * @return Decrypted string
+     * @access public    
+     */
+    public function decrypt($paramstr) 
+    {
         //Decrypt is exactly the same as encrypting the string. Reuse (en)crypt code
         return $this->crypt($paramstr);
     }
 
     /**
-    * Assign encryption key to class
-    *
-    * @param  string key Key which will be used for encryption
-    * @return void
-    * @access public    
-    */
-    public function key(&$key) {
+     * Assign encryption key to class
+     *
+     * @param  string $key Key which will be used for encryption
+     * @return void
+     * @access public    
+     */
+    public function key(&$key) 
+    {
         $len= strlen($key);
         
         //Create array matrix
         for ($this->i = 0; $this->i < 256; $this->i++) {
             $this->s[$this->i] = $this->i;
-        }
+    	}
 
     //Initialize encryption matrix
         $this->j = 0;
@@ -146,15 +156,15 @@ final class Crypt_Rc4 {
     // PROTECTED FUNCTIONS
 
     /**
-    * (en/de) crypt function. 
-    * Function canm be used for encrypting and decrypting a message
-    *
-    * @param  string paramstr string that will encrypted
-    * @return void
-    * @access private
-    */
-    private function crypt($paramstr) {
-
+     * (en/de) crypt function. 
+     * Function canm be used for encrypting and decrypting a message
+     *
+     * @param  string $paramstr string that will encrypted
+     * @return Encrypted or decrypted message
+     * @access private
+     */
+    private function crypt($paramstr) 
+    {
         //Init key for every call, Bugfix for PHP issue #22316
         $this->key($this->_key);
 
@@ -178,13 +188,14 @@ final class Crypt_Rc4 {
     }
 
     /**
-    * This method prevents changes to the key during the encryption procedure.
-    *
-    * @param  string key key which will be used for encryption
-    * @return void
-    * @access private
-    */
-    private function setKey($key) {
+     * This method prevents changes to the key during the encryption procedure.
+     *
+     * @param  string $key key which will be used for encryption
+     * @return void
+     * @access private
+     */
+    private function setKey($key) 
+    {
         if (strlen($key) > 0)
             $this->_key = $key;
     }
