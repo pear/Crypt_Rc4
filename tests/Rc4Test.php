@@ -12,7 +12,7 @@ class Rc4Test extends PHPUnit2_Framework_TestCase {
 	{
 		$rc4 = new Crypt_Rc4();
 		$rc4->key($this->_key);
-		$this->assertEquals('', $rc4->encrypt($this->_message));
+		$this->assertEquals('4kwQ6uYzPplnt0Q=', base64_encode($rc4->encrypt($this->_message)));
 	}
 	
 	//Test simple decryption. Checking result
@@ -20,7 +20,7 @@ class Rc4Test extends PHPUnit2_Framework_TestCase {
 	{
 		$rc4 = new Crypt_Rc4();
 		$rc4->key($this->_key);
-		$this->assertEquals('', $rc4->encrypt($this->_message));
+		$this->assertEquals('PEAR Rulez!', $rc4->decrypt(base64_decode('4kwQ6uYzPplnt0Q=')));
 	}
 	
 	//Test encryption and than decryption of the encrypted string. The result must be the same as the message at the start
@@ -29,7 +29,7 @@ class Rc4Test extends PHPUnit2_Framework_TestCase {
 	{
 		$rc4 = new Crypt_Rc4();
 		$rc4->key($this->_key);
-		$message = $rc4->encrypt($this->_Message);
+		$message = $rc4->encrypt($this->_message);
 		$message = $rc4->decrypt($message);
 		$this->assertEquals($this->_message, $message);
 	}
