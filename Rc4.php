@@ -47,7 +47,7 @@
 * @author Dave Mertens <zyprexia@php.net>
  */
 
-/* sealed */ class Crypt_Rc4 {
+final class Crypt_Rc4 {
 
     /**
     * Contains salt key used by en(de)cryption function
@@ -152,7 +152,7 @@
     * @return void
     * @access private
     */
-    final protected private function crypt($paramstr) {
+    protected private function crypt($paramstr) {
 
         //Init key for every call, Bugfix for PHP issue #22316
         $this->key($this->_key);
@@ -183,7 +183,7 @@
     * @return void
     * @access private
     */
-    final protected function setKey($key) {
+    protected function setKey($key) {
         if (strlen($key) > 0)
             $this->_key = $key;
     }
