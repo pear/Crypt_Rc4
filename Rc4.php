@@ -29,7 +29,7 @@
 * $message = "PEAR rulez!";
 *
 * $rc4 = new Crypt_RC4;
-* $rc4->key($key);
+* $rc4->setKey($key);
 * echo "Original message: $message <br>\n";
 * $rc4->crypt($message);
 * echo "Encrypted message: $message <br>\n";
@@ -39,7 +39,7 @@
 * @version $Revision$
 * @access public
 * @package Crypt
-* @author Dave Mertens <dmertens@zyprexia.com>
+* @author Dave Mertens <zyprexia@php.net>
  */
 class Crypt_RC4 {
 
@@ -69,7 +69,7 @@ class Crypt_RC4 {
     * Constructor
     * Pass encryption key to key()
     *
-    * @see    key() 
+    * @see    setKey() 
     * @param  string key    - Key which will be used for encryption
     * @return void
     * @access public
