@@ -1,9 +1,9 @@
 <?php
 /* vim: set expandtab tabstop=4 shiftwidth=4: */
 // +----------------------------------------------------------------------+
-// | PHP Version 4                                                        |
+// | PHP Version 5                                                        |
 // +----------------------------------------------------------------------+
-// | Copyright (c) 1997-2003 The PHP Group                                |
+// | Copyright (c) 1997-2004 The PHP Group                                |
 // +----------------------------------------------------------------------+
 // | This source file is subject to version 2.0 of the PHP license,       |
 // | that is bundled with this package in the file LICENSE, and is        |
@@ -13,76 +13,107 @@
 // | obtain it through the world-wide-web, please send a note to          |
 // | license@php.net so we can mail you a copy immediately.               |
 // +----------------------------------------------------------------------+
-// | Authors: Dave Mertens <dmertens@zyprexia.com>                        |
+// | Authors: Dave Mertens <zyprexia@php.net>                             |
 // +----------------------------------------------------------------------+
 //
 // $Id$
 
 
 /**
-* RC4 stream cipher routines implementation
+* RC4 stream cipher routines implementation. 
 *
-* in PHP4 based on code written by Damien Miller <djm@mindrot.org>
+* in PHP5(!) based on code written by Damien Miller <djm@mindrot.org>
+* This class <b><u>BREAKS</u></b> with <b><u>COMPABILITY</u></b> with earlier PHP 4 version of the RC4 class. 
+* PHP 4 versions are available at http://pear.php.net/package/Crypt_RC4, download version 1.x
+* 
 *
-* Usage:
-* $key = "pear";
-* $message = "PEAR rulez!";
+* Usage:<br />
+* $key = "pear";<br />
+* $message = "PEAR rulez!";<br />
 *
-* $rc4 = new Crypt_RC4;
-* $rc4->setKey($key);
-* echo "Original message: $message <br>\n";
-* $rc4->crypt($message);
-* echo "Encrypted message: $message <br>\n";
-* $rc4->decrypt($message);
-* echo "Decrypted message: $message <br>\n";
+* $rc4 = new Crypt_Rc4;<br />
+* $rc4->setKey($key);<br />
+* echo "Original message: $message &lt;br /&gt;\n";<br /><br />
+*
+* $message = $rc4->encrypt($message);<br />
+* echo "Encrypted message: $message &lt;br /&gt;\n";<br /><br />
+*
+* $message $rc4->decrypt($message);<br />
+* echo "Decrypted message: $message &lt;br /&gt;>\n";<br />
 *
 * @version $Revision$
 * @access public
 * @package Crypt
 * @author Dave Mertens <zyprexia@php.net>
  */
-class Crypt_Rc4 {
+
+/* sealed */ class Crypt_Rc4 {
 
     /**
-    * Real programmers...
+    * Contains salt key used by en(de)cryption function
     * @var array
+    * @access private
     */
-    var $s= array();
+    private var $s= array();
+    
     /**
-    * Real programmers...
+    * First Part of encryption matrix
     * @var array
+    * @access private
     */
-    var $i= 0;
+    private var $i= 0;
+    
     /**
-    * Real programmers...
+    * Second part of encryption matrix
     * @var array
+    * @access private
     */
-    var $j= 0;
+    private var $j= 0;
 
     /**
-    * Key holder
+    * Used provided key for encryption. 
     * @var string
+    * @access private
     */
-    var $_key;
+    private var $_key;
 
     /**
-    * Constructor
+    * Constructor for encryption class
     * Pass encryption key to key()
     *
     * @see    setKey() 
-    * @param  string key    - Key which will be used for encryption
+    * @param  string key    - Optional key which will be used for encryption
     * @return void
     * @access public
     */
-    function Crypt_RC4($key = null) {
+    function __construct($key = null) {
         if ($key != null) {
             $this->setKey($key);
         }
     }
 
-    function setKey($key) {
-        if (strlen($key) > 0)
-            $this->_key = $key;
+    /**
+    * Encrypt function
+    *
+    * @param  string paramstr 	- string that will decrypted
+    * @return Encrypted string
+    * @access public    
+    */
+    public function encrypt($paramstr) {
+        //Decrypt is exactly the same as encrypting the string. Reuse (en)crypt code
+        return $this->crypt($paramstr);
+    }
+
+    /**
+    * Decrypt function
+    *
+    * @param  string paramstr 	- string that will decrypted
+    * @return Decrypted string
+    * @access public    
+    */
+    public function decrypt($paramstr) {
+        //Decrypt is exactly the same as encrypting the string. Reuse (en)crypt code
+        return $this->crypt($paramstr);
     }
 
     /**
@@ -92,12 +123,15 @@ class Crypt_Rc4 {
     * @return void
     * @access public    
     */
-    function key(&$key) {
+    public function key(&$key) {
         $len= strlen($key);
+        
+        //Create array matrix
         for ($this->i = 0; $this->i < 256; $this->i++) {
             $this->s[$this->i] = $this->i;
         }
 
+	//Initialize encryption matrix
         $this->j = 0;
         for ($this->i = 0; $this->i < 256; $this->i++) {
             $this->j = ($this->j + $this->s[$this->i] + ord($key[$this->i % $len])) % 256;
@@ -108,19 +142,25 @@ class Crypt_Rc4 {
         $this->i = $this->j = 0;
     }
 
+    // PROTECTED FUNCTIONS
+
     /**
-    * Encrypt function
+    * (en/de) crypt function. 
+    * Function canm be used for encrypting and decrypting a message
     *
     * @param  string paramstr 	- string that will encrypted
     * @return void
-    * @access public    
+    * @access private
     */
-    function crypt(&$paramstr) {
+    final protected private function crypt($paramstr) {
 
-        //Init key for every call, Bugfix 22316
+        //Init key for every call, Bugfix for PHP issue #22316
         $this->key($this->_key);
 
+	//length of message
         $len= strlen($paramstr);
+        
+        //Encrypt message
         for ($c= 0; $c < $len; $c++) {
             $this->i = ($this->i + 1) % 256;
             $this->j = ($this->j + $this->s[$this->i]) % 256;
@@ -132,20 +172,21 @@ class Crypt_Rc4 {
 
             $paramstr[$c] = chr(ord($paramstr[$c]) ^ $this->s[$t]);
         }
+        
+        return $paramstr;
     }
 
     /**
-    * Decrypt function
+    * This method prevents changes to the key during the encryption procedure.
     *
-    * @param  string paramstr 	- string that will decrypted
+    * @param  string key    - key which will be used for encryption
     * @return void
-    * @access public    
+    * @access private
     */
-    function decrypt(&$paramstr) {
-        //Decrypt is exactly the same as encrypting the string. Reuse (en)crypt code
-        $this->crypt($paramstr);
+    final protected function setKey($key) {
+        if (strlen($key) > 0)
+            $this->_key = $key;
     }
-
 
 }	//end of RC4 class
 ?>

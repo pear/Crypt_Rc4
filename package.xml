@@ -4,8 +4,8 @@
      generated package.xml files -->
 <package version="1.0">
   <name>Crypt_RC4</name>
-  <description>RC4 encryption class</description>
-  <summary>Encryption class for RC4 encryption</summary>
+  <description>RC4 encryption class for PHP 5</description>
+  <summary>Encryption class for RC4 encryption for PHP 5</summary>
   <maintainers>
     <maintainer>
       <user>zyprexia</user>
@@ -14,17 +14,20 @@
     </maintainer>
   </maintainers>
   <release>
-    <version>1.0.2</version>
+    <version>1.9.0</version>
     <license>PHP</license>
-    <state>stable</state>
-    <date>2003-10-20</date>
+    <state>alpha</state>
+    <date>2004-08-01</date>
     <notes>
-    	Bugfix release: This version should prevent/solve the problems with the undefined index with some pear installers
+	Revised version for PHP5.
     </notes>
     <filelist>
      <dir name="/" baseinstalldir="Crypt">
       <file role="php">Rc4.php</file>
      </dir>
     </filelist>
+    <deps>
+     <dep type="php" rel="ge" version="5.0.0" />
+    </deps>
   </release>
 </package>
