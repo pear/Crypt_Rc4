@@ -58,7 +58,22 @@ class Crypt_RC4 {
     * @var array
     */	
 	var $j= 0;
-	
+
+    /**
+    * Constructor
+    * Pass encryption key to key()
+    *
+    * @see    key() 
+    * @param  string key    - Key which will be used for encryption
+    * @return void
+    * @access public
+    */
+    function Crypt_RC4($key = null) {
+        if ($key != null) {
+            $this->key($key);
+        }
+    }
+    
     /**
     * Assign encryption key to class
     *
