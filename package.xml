@@ -3,7 +3,7 @@
 <!-- do not use the "Type" attribute here, that one is only for
      generated package.xml files -->
 <package version="1.0">
-  <name>Crypt</name>
+  <name>Crypt_Rc4</name>
   <description>RC4 encryption class</description>
   <summary>Encryption class for rc4 encryption</summary>
   <maintainers>
