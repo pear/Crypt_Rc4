@@ -28,7 +28,7 @@
 * $key = "pear";
 * $message = "PEAR rulez!";
 *
-* $rc4 = new RC4;
+* $rc4 = new Crypt_RC4;
 * $rc4->key($key);
 * echo "Original message: $message <br>\n";
 * $rc4->crypt($message);
@@ -58,6 +58,12 @@ class Crypt_RC4 {
     * @var array
     */	
 	var $j= 0;
+	
+	/**
+	* Key holder
+	* @var string
+	*/
+	var $_key;
 
     /**
     * Constructor
@@ -69,9 +75,16 @@ class Crypt_RC4 {
     * @access public
     */
     function Crypt_RC4($key = null) {
-        if ($key != null) {
-            $this->key($key);
+        if ($key != null)
+        {
+        	$this->setKey($key);
         }
+    }
+    
+    function setKey($key)
+    {
+    	if (strlen($key) > 0)
+    		$this->_key = $key;
     }
     
     /**
@@ -105,6 +118,9 @@ class Crypt_RC4 {
     * @access public    
     */
 	function crypt(&$paramstr) {
+		//Init key for every call.
+		//Bugfix 22316
+		$this->key($this->_key);
 		$len= strlen($paramstr);
 		for ($c= 0; $c < $len; $c++) {
 			$this->i = ($this->i + 1) % 256;
@@ -127,18 +143,8 @@ class Crypt_RC4 {
     * @access public    
     */
 	function decrypt(&$paramstr) {
-		$len= strlen($paramstr);
-		for ($c= 0; $c < $len; $c++) {
-			$this->i = ($this->i + 1) % 256;
-			$this->j = ($this->j + $this->s[$this->i]) % 256;
-			$t = $this->s[$this->i];
-			$this->s[$this->i] = $this->s[$this->j];
-			$this->s[$this->j] = $t;
-
-			$t = ($this->s[$this->i] + $this->s[$this->j]) % 256;
-
-			$paramstr[$c] = chr(ord($paramstr[$c]) ^ $this->s[$t]);
-		}
+		//Decrypt is exactly the same as encrypting the string. Reuse (en)crypt code
+		$this->crypt($paramstr);
 	}
 	
 
