@@ -10,7 +10,7 @@ class Rc4Test extends PHPUnit2_Framework_TestCase {
 	
 	public function testSimpleEncryption()
 	{
-		$rc4 = new Crypt_Rc4();
+		$rc4 = new Crypt_Rc4;
 		$rc4->key($this->_key);
 		$this->assertEquals('4kwQ6uYzPplnt0Q=', base64_encode($rc4->encrypt($this->_message)));
 	}
@@ -18,7 +18,7 @@ class Rc4Test extends PHPUnit2_Framework_TestCase {
 	//Test simple decryption. Checking result
 	public function testSimpleDecryption()
 	{
-		$rc4 = new Crypt_Rc4();
+		$rc4 = new Crypt_Rc4;
 		$rc4->key($this->_key);
 		$this->assertEquals('PEAR Rulez!', $rc4->decrypt(base64_decode('4kwQ6uYzPplnt0Q=')));
 	}
@@ -27,11 +27,18 @@ class Rc4Test extends PHPUnit2_Framework_TestCase {
 	//This test is based on the usage example in the Rc4 class. It also test fix for PHP issue #22316
 	public function testRoundRobinEncryption()
 	{
-		$rc4 = new Crypt_Rc4();
+		$rc4 = new Crypt_Rc4;
 		$rc4->key = $this->_key;
 		$message = $rc4->encrypt($this->_message);
 		$message = $rc4->decrypt($message);
 		$this->assertEquals($this->_message, $message);
+	}
+	
+	//test RC4 assigning key using the constructor
+	public function testConstuctor()
+	{
+		$rc4 = new Crypt_Rc4($this->_key);
+		$this->assertEquals('4kwQ6uYzPplnt0Q=', base64_encode($rc4->encrypt($this->_message)));
 	}
 }
 

@@ -23,33 +23,34 @@
  * RC4 stream cipher routines implementation. 
  *
  * in PHP5(!) based on code written by Damien Miller <djm@mindrot.org>
- * This class <b><u>BREAKS</u></b> with <b><u>COMPABILITY</u></b> with earlier PHP 4 version of the RC4 class. 
+ * This class <b>BREAKS</b> with <b>COMPABILITY</b> with earlier PHP 4 version of the RC4 class. 
  * PHP 4 versions are available at http://pear.php.net/package/Crypt_RC4, download version 1.x
  * 
  *
- * Usage:<br />
+ * Basic usage of this class
  * <code>
- * $key = "pear";<br />
- * $message = "PEAR rulez!";<br />
+ * $key = "pear";
+ * $message = "PEAR rulez!";
  *
- * $rc4 = new Crypt_Rc4;<br />
- * $rc4->setKey($key);<br />
- * echo "Original message: $message &lt;br /&gt;\n";<br /><br />
+ * $rc4 = new Crypt_Rc4;
+ * $rc4->setKey($key);
+ * echo "Original message: $message <br />\n";
  *
- * $message = $rc4->encrypt($message);<br />
- * echo "Encrypted message: $message &lt;br /&gt;\n";<br /><br />
+ * $message = $rc4->encrypt($message);
+ * echo "Encrypted message: $message <br />\n";
  *
- * $message $rc4->decrypt($message);<br />
- * echo "Decrypted message: $message &lt;br /&gt;>\n";<br />
+ * $message $rc4->decrypt($message);
+ * echo "Decrypted message: $message <br />\n";
  * </code>
  *
  * Another example using some of PHP5 new features
  * <code>
- * $message = "PEAR Rulez!";<br /><br />
+ * $origmessage = "PEAR Rulez!";
  *
- * $rc4 = new Crypt_Rc4;<br />
- * $rc4->key = "pear";<br />
- * $message = $rc4->encrypt($message);<br />
+ * $rc4 = new Crypt_Rc4;
+ * $rc4->key = "pear";
+ * $codedmessage = $rc4->encrypt($origmessage);
+ * echo "Encrypted message: $codedmessage <br />\n";
  * </code>
  *
  * @category Crypt
@@ -100,7 +101,7 @@ final class Crypt_Rc4 {
      * @param  string $key a key which will be used for encryption
      * @return void
      * @access public
-     * @see    setKey() 
+     * @see    Key() 
      */
     function __construct($key = null) 
     {
