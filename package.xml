@@ -14,13 +14,12 @@
     </maintainer>
   </maintainers>
   <release>
-    <version>0.2</version>
+    <version>1.0</version>
     <license>PHP</license>
     <state>stable</state>
-    <date>2002-10-01</date>
+    <date>2002-12-11</date>
     <notes>
-    	Second release of the Rc4 package. This one follows closer the pear standards.
-		Note that the file Crypt_Rc4.php is renamed to Rc4.php    	
+    	Final release of Crypt package. 
     </notes>
     <filelist>
      <dir name="/" baseinstalldir="Crypt">
