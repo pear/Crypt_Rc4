@@ -28,7 +28,7 @@ class Rc4Test extends PHPUnit2_Framework_TestCase {
 	public function testRoundRobinEncryption()
 	{
 		$rc4 = new Crypt_Rc4();
-		$rc4->key($this->_key);
+		$rc4->key = $this->_key;
 		$message = $rc4->encrypt($this->_message);
 		$message = $rc4->decrypt($message);
 		$this->assertEquals($this->_message, $message);
