@@ -64,7 +64,7 @@ class Crypt_RC4 {
 	* @var string
 	*/
 	var $_key;
-
+	
     /**
     * Constructor
     * Pass encryption key to key()
@@ -118,9 +118,10 @@ class Crypt_RC4 {
     * @access public    
     */
 	function crypt(&$paramstr) {
-		//Init key for every call.
-		//Bugfix 22316
+
+		//Init key for every call, Bugfix 22316
 		$this->key($this->_key);
+
 		$len= strlen($paramstr);
 		for ($c= 0; $c < $len; $c++) {
 			$this->i = ($this->i + 1) % 256;
