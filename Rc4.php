@@ -83,7 +83,7 @@ final class Crypt_Rc4 {
     * Pass encryption key to key()
     *
     * @see    setKey() 
-    * @param  string key - Optional key which will be used for encryption
+    * @param  string key Optional key which will be used for encryption
     * @return void
     * @access public
     */
@@ -96,7 +96,7 @@ final class Crypt_Rc4 {
     /**
     * Encrypt function
     *
-    * @param  string paramstr - string that will decrypted
+    * @param  string paramstr string that will decrypted
     * @return Encrypted string
     * @access public    
     */
@@ -108,7 +108,7 @@ final class Crypt_Rc4 {
     /**
     * Decrypt function
     *
-    * @param  string paramstr - string that will decrypted
+    * @param  string paramstr string that will decrypted
     * @return Decrypted string
     * @access public    
     */
@@ -120,7 +120,7 @@ final class Crypt_Rc4 {
     /**
     * Assign encryption key to class
     *
-    * @param  string key - Key which will be used for encryption
+    * @param  string key Key which will be used for encryption
     * @return void
     * @access public    
     */
@@ -149,7 +149,7 @@ final class Crypt_Rc4 {
     * (en/de) crypt function. 
     * Function canm be used for encrypting and decrypting a message
     *
-    * @param  string paramstr     - string that will encrypted
+    * @param  string paramstr string that will encrypted
     * @return void
     * @access private
     */
@@ -158,7 +158,7 @@ final class Crypt_Rc4 {
         //Init key for every call, Bugfix for PHP issue #22316
         $this->key($this->_key);
 
-    //length of message
+        //length of message
         $len= strlen($paramstr);
         
         //Encrypt message
@@ -180,7 +180,7 @@ final class Crypt_Rc4 {
     /**
     * This method prevents changes to the key during the encryption procedure.
     *
-    * @param  string key    - key which will be used for encryption
+    * @param  string key key which will be used for encryption
     * @return void
     * @access private
     */
