@@ -54,28 +54,28 @@
     * @var array
     * @access private
     */
-    private var $s= array();
+    private $s= array();
     
     /**
     * First Part of encryption matrix
     * @var array
     * @access private
     */
-    private var $i= 0;
+    private $i= 0;
     
     /**
     * Second part of encryption matrix
     * @var array
     * @access private
     */
-    private var $j= 0;
+    private $j= 0;
 
     /**
     * Used provided key for encryption. 
     * @var string
     * @access private
     */
-    private var $_key;
+    private $_key;
 
     /**
     * Constructor for encryption class
