@@ -23,7 +23,7 @@
  * RC4 stream cipher routines implementation. 
  *
  * in PHP5(!) based on code written by Damien Miller <djm@mindrot.org>
- * This class <b>BREAKS</b> with <b>COMPABILITY</b> with earlier PHP 4 version of the RC4 class. 
+ * This class <b>BREAKS >COMPABILITY</b> with earlier PHP 4 versions of the RC4 class. 
  * PHP 4 versions are available at http://pear.php.net/package/Crypt_RC4, download version 1.x
  * 
  *
@@ -43,7 +43,7 @@
  * echo "Decrypted message: $message <br />\n";
  * </code>
  *
- * Another example using some of PHP5 new features
+ * Another example
  * <code>
  * $origmessage = "PEAR Rulez!";
  *
@@ -114,7 +114,7 @@ final class Crypt_Rc4 {
      * Encrypt function
      *
      * @param  string $paramstr string that will decrypted
-     * @return Encrypted string
+     * @return string Encrypted string
      * @access public    
      */
     public function encrypt($paramstr) 
@@ -127,7 +127,7 @@ final class Crypt_Rc4 {
      * Decrypt function
      *
      * @param  string $paramstr string that will decrypted
-     * @return Decrypted string
+     * @return string Decrypted string
      * @access public    
      */
     public function decrypt($paramstr) 
