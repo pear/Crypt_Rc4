@@ -23,7 +23,7 @@
     </notes>
     <filelist>
      <dir name="/" baseinstalldir="Crypt">
-      <file role="php">Crypt_Rc4.php</file>
+      <file role="php">Rc4.php</file>
      </dir>
     </filelist>
   </release>
