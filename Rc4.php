@@ -23,7 +23,7 @@
  * RC4 stream cipher routines implementation. 
  *
  * in PHP5(!) based on code written by Damien Miller <djm@mindrot.org>
- * This class <b>BREAKS >COMPABILITY</b> with earlier PHP 4 versions of the RC4 class. 
+ * This class <b>BREAKS COMPABILITY</b> with earlier PHP 4 versions of the RC4 class. 
  * PHP 4 versions are available at http://pear.php.net/package/Crypt_RC4, download version 1.x
  * 
  *
@@ -43,7 +43,7 @@
  * echo "Decrypted message: $message <br />\n";
  * </code>
  *
- * Another example
+ * Another example how the class can be used
  * <code>
  * $origmessage = "PEAR Rulez!";
  *
@@ -87,12 +87,12 @@ final class Crypt_Rc4 {
     private $j= 0;
 
     /**
-     * Used provided key for encryption. 
+     * symmetric key used for encryption. 
      *
      * @var string
-     * @access private
+     * @access public
      */
-    private $_key;
+    private $key;    //variable itself is private, but is made accessibly using __get and __set method
 
     /**
      * Constructor for encryption class
@@ -154,13 +154,13 @@ final class Crypt_Rc4 {
      *
      * @param string $property Only property 'key' is supported
      * @return string Enecryption key 
-     * @access public
+     * @access private
      */
     public function __get($property)
     {
         switch (strtolower($property)) {
             case "key":
-                return $this->_key;
+                return $this->key;
                 break;
         }
     }
@@ -171,7 +171,7 @@ final class Crypt_Rc4 {
      * @param string $property Only property 'key' is supported
      * @param string $value Value for property
      * @return void
-     * @access public
+     * @access private
      */
     public function __set($property, $value)
     {
@@ -195,7 +195,7 @@ final class Crypt_Rc4 {
     private function crypt($paramstr) 
     {
         //Init key for every call, Bugfix for PHP issue #22316
-        $this->initializeKey($this->_key);
+        $this->initializeKey($this->key);
 
         //length of message
         $len= strlen($paramstr);
@@ -229,8 +229,8 @@ final class Crypt_Rc4 {
         if ( is_string($key) && strlen($key) > 0 ) {
         
             //Only initialize key if it's different
-            if ($key != $this->_key) {
-                    $this->_key = $key;
+            if ($key != $this->key) {
+                    $this->key = $key;
 
                 $len= strlen($key);
         
@@ -252,7 +252,7 @@ final class Crypt_Rc4 {
         }
         else {
             //throw exception (which exception are available in php5 by default??)
-            //throw new Exception("Please provide an encryption key with more than character");
+            //throw new Exception("Please provide an valid encryption key");
         }
     }
 }    //end of RC4 class
