@@ -41,7 +41,7 @@
 * @package Crypt
 * @author Dave Mertens <zyprexia@php.net>
  */
-class Crypt_RC4 {
+class Crypt_Rc4 {
 
     /**
     * Real programmers...
