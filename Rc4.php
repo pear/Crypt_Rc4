@@ -41,10 +41,11 @@
 * $message $rc4->decrypt($message);<br />
 * echo "Decrypted message: $message &lt;br /&gt;>\n";<br />
 *
-* @version $Revision$
-* @access public
+* @category Crypt
 * @package Crypt
 * @author Dave Mertens <zyprexia@php.net>
+* @version $Revision$
+* @access public
  */
 
 final class Crypt_Rc4 {
@@ -82,7 +83,7 @@ final class Crypt_Rc4 {
     * Pass encryption key to key()
     *
     * @see    setKey() 
-    * @param  string key    - Optional key which will be used for encryption
+    * @param  string key - Optional key which will be used for encryption
     * @return void
     * @access public
     */
@@ -95,7 +96,7 @@ final class Crypt_Rc4 {
     /**
     * Encrypt function
     *
-    * @param  string paramstr 	- string that will decrypted
+    * @param  string paramstr - string that will decrypted
     * @return Encrypted string
     * @access public    
     */
@@ -107,7 +108,7 @@ final class Crypt_Rc4 {
     /**
     * Decrypt function
     *
-    * @param  string paramstr 	- string that will decrypted
+    * @param  string paramstr - string that will decrypted
     * @return Decrypted string
     * @access public    
     */
@@ -119,7 +120,7 @@ final class Crypt_Rc4 {
     /**
     * Assign encryption key to class
     *
-    * @param  string key	- Key which will be used for encryption
+    * @param  string key - Key which will be used for encryption
     * @return void
     * @access public    
     */
@@ -131,7 +132,7 @@ final class Crypt_Rc4 {
             $this->s[$this->i] = $this->i;
         }
 
-	//Initialize encryption matrix
+    //Initialize encryption matrix
         $this->j = 0;
         for ($this->i = 0; $this->i < 256; $this->i++) {
             $this->j = ($this->j + $this->s[$this->i] + ord($key[$this->i % $len])) % 256;
@@ -148,7 +149,7 @@ final class Crypt_Rc4 {
     * (en/de) crypt function. 
     * Function canm be used for encrypting and decrypting a message
     *
-    * @param  string paramstr 	- string that will encrypted
+    * @param  string paramstr     - string that will encrypted
     * @return void
     * @access private
     */
@@ -157,7 +158,7 @@ final class Crypt_Rc4 {
         //Init key for every call, Bugfix for PHP issue #22316
         $this->key($this->_key);
 
-	//length of message
+    //length of message
         $len= strlen($paramstr);
         
         //Encrypt message
@@ -188,5 +189,5 @@ final class Crypt_Rc4 {
             $this->_key = $key;
     }
 
-}	//end of RC4 class
+}    //end of RC4 class
 ?>
