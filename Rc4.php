@@ -152,7 +152,7 @@ final class Crypt_Rc4 {
     * @return void
     * @access private
     */
-    protected private function crypt($paramstr) {
+    private function crypt($paramstr) {
 
         //Init key for every call, Bugfix for PHP issue #22316
         $this->key($this->_key);
@@ -183,7 +183,7 @@ final class Crypt_Rc4 {
     * @return void
     * @access private
     */
-    protected function setKey($key) {
+    private function setKey($key) {
         if (strlen($key) > 0)
             $this->_key = $key;
     }
