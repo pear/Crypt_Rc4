@@ -33,7 +33,7 @@
  * $message = "PEAR rulez!";
  *
  * $rc4 = new Crypt_Rc4;
- * $rc4->setKey($key);
+ * $rc4->key($key);
  * echo "Original message: $message <br />\n";
  *
  * $message = $rc4->encrypt($message);
@@ -186,7 +186,7 @@ final class Crypt_Rc4 {
 
     /**
      * (en/de) crypt function. 
-     * Function canm be used for encrypting and decrypting a message
+     * Function can be used for encrypting and decrypting a message
      *
      * @param  string $paramstr string that will encrypted
      * @return Encrypted or decrypted message
