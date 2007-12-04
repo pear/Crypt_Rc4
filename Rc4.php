@@ -37,7 +37,8 @@
  * echo "Original message: $message <br />\n";
  *
  * $message = $rc4->encrypt($message);
- * echo "Encrypted message: $message <br />\n";
+ * $safe_codedmessage = base64_encode($message);
+ * echo "Encrypted message: $safe_codedmessage <br />\n";
  *
  * $message $rc4->decrypt($message);
  * echo "Decrypted message: $message <br />\n";
@@ -47,11 +48,15 @@
  * <code>
  * $origmessage = "PEAR Rulez!";
  *
- * $rc4 = new Crypt_Rc4;
- * $rc4->key = "pear";
+ * $rc4 = new Crypt_Rc4("pear");
  * $codedmessage = $rc4->encrypt($origmessage);
- * echo "Encrypted message: $codedmessage <br />\n";
+ * $safe_codedmessage = base64_encode($codedmessage);
+ * echo "Encrypted message: $safe_codedmessage <br />\n";
  * </code>
+ * 
+ * Note: The encrypted output is binary, and therefore cannot be properly
+ * displayed in shell or a browser. If you would like to display, please
+ * use the base64_encode function as above.
  *
  * @category Crypt
  * @package Crypt
@@ -106,13 +111,18 @@ final class Crypt_Rc4 {
     function __construct($key = null) 
     {
         if ($key != null) {
-            $this->setKey($key);
+            $this->key($key);
         }
     }
 
     /**
      * Encrypt function
      *
+     * Note: The encrypted output of this function isa  binary string, and 
+     * therefore cannot be properly displayed in shell or a browser. If you 
+     * would like to display, please use the base64_encode function before
+     * before output.
+     * 
      * @param  string $paramstr string that will decrypted
      * @return string Encrypted string
      * @access public    
@@ -120,7 +130,7 @@ final class Crypt_Rc4 {
     public function encrypt($paramstr) 
     {
         //Decrypt is exactly the same as encrypting the string. Reuse (en)crypt code
-        return $this->crypt($paramstr);
+        return $this->_crypt($paramstr);
     }
 
     /**
@@ -133,7 +143,7 @@ final class Crypt_Rc4 {
     public function decrypt($paramstr) 
     {
         //Decrypt is exactly the same as encrypting the string. Reuse (en)crypt code
-        return $this->crypt($paramstr);
+        return $this->_crypt($paramstr);
     }
 
     /**
@@ -145,7 +155,7 @@ final class Crypt_Rc4 {
      */
     public function key($key) 
     {
-        $this->initializeKey($key);
+        $this->_initializeKey($key);
     }
     
     
@@ -177,7 +187,7 @@ final class Crypt_Rc4 {
     {
         switch (strtolower($property)) {
             case "key":
-                return $this->initializeKey($value);
+                return $this->_initializeKey($value);
                 break;
         }
     }
@@ -192,10 +202,10 @@ final class Crypt_Rc4 {
      * @return Encrypted or decrypted message
      * @access private
      */
-    private function crypt($paramstr) 
+    private function _crypt($paramstr) 
     {
         //Init key for every call, Bugfix for PHP issue #22316
-        $this->initializeKey($this->key);
+        $this->_initializeKey($this->key);
 
         //length of message
         $len= strlen($paramstr);
@@ -222,25 +232,27 @@ final class Crypt_Rc4 {
      * @param  string $key key which will be used for encryption
      * @return void
      * @access private
+     * @todo   Implement error handling!
      */
-    private function initializeKey($key) 
+    private function _initializeKey($key) 
     {
         //better string validation
         if ( is_string($key) && strlen($key) > 0 ) {
         
             //Only initialize key if it's different
             if ($key != $this->key) {
-                    $this->key = $key;
+                $this->key = $key;
 
                 $len= strlen($key);
         
                 //Create array matrix
                 for ($this->i = 0; $this->i < 256; $this->i++) {
-                        $this->s[$this->i] = $this->i;
+                    $this->s[$this->i] = $this->i;
                 }
 
                 //Initialize encryption matrix
                 $this->j = 0;
+                
                 for ($this->i = 0; $this->i < 256; $this->i++) {
                     $this->j = ($this->j + $this->s[$this->i] + ord($key[$this->i % $len])) % 256;
                     $t = $this->s[$this->i];
