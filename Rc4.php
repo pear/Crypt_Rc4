@@ -20,12 +20,12 @@
 
 
 /**
- * RC4 stream cipher routines implementation. 
+ * RC4 stream cipher routines implementation.
  *
  * in PHP5(!) based on code written by Damien Miller <djm@mindrot.org>
- * This class <b>BREAKS COMPABILITY</b> with earlier PHP 4 versions of the RC4 class. 
+ * This class <b>BREAKS COMPABILITY</b> with earlier PHP 4 versions of the RC4 class.
  * PHP 4 versions are available at http://pear.php.net/package/Crypt_RC4, download version 1.x
- * 
+ *
  *
  * Basic usage of this class
  * <code>
@@ -53,7 +53,7 @@
  * $safe_codedmessage = base64_encode($codedmessage);
  * echo "Encrypted message: $safe_codedmessage <br />\n";
  * </code>
- * 
+ *
  * Note: The encrypted output is binary, and therefore cannot be properly
  * displayed in shell or a browser. If you would like to display, please
  * use the base64_encode function as above.
@@ -74,7 +74,7 @@ final class Crypt_Rc4 {
      * @access private
      */
     private $s= array();
-    
+
     /**
      * First Part of encryption matrix
      *
@@ -82,7 +82,7 @@ final class Crypt_Rc4 {
      * @access private
      */
     private $i= 0;
-    
+
     /**
      * Second part of encryption matrix
      *
@@ -92,7 +92,7 @@ final class Crypt_Rc4 {
     private $j= 0;
 
     /**
-     * symmetric key used for encryption. 
+     * symmetric key used for encryption.
      *
      * @var string
      * @access public
@@ -106,9 +106,9 @@ final class Crypt_Rc4 {
      * @param  string $key a key which will be used for encryption
      * @return void
      * @access public
-     * @see    Key() 
+     * @see    Key()
      */
-    function __construct($key = null) 
+    function __construct($key = null)
     {
         if ($key != null) {
             $this->key($key);
@@ -118,16 +118,16 @@ final class Crypt_Rc4 {
     /**
      * Encrypt function
      *
-     * Note: The encrypted output of this function isa  binary string, and 
-     * therefore cannot be properly displayed in shell or a browser. If you 
+     * Note: The encrypted output of this function isa  binary string, and
+     * therefore cannot be properly displayed in shell or a browser. If you
      * would like to display, please use the base64_encode function before
      * before output.
-     * 
+     *
      * @param  string $paramstr string that will decrypted
      * @return string Encrypted string
-     * @access public    
+     * @access public
      */
-    public function encrypt($paramstr) 
+    public function encrypt($paramstr)
     {
         //Decrypt is exactly the same as encrypting the string. Reuse (en)crypt code
         return $this->_crypt($paramstr);
@@ -138,9 +138,9 @@ final class Crypt_Rc4 {
      *
      * @param  string $paramstr string that will decrypted
      * @return string Decrypted string
-     * @access public    
+     * @access public
      */
-    public function decrypt($paramstr) 
+    public function decrypt($paramstr)
     {
         //Decrypt is exactly the same as encrypting the string. Reuse (en)crypt code
         return $this->_crypt($paramstr);
@@ -151,19 +151,19 @@ final class Crypt_Rc4 {
      *
      * @param  string $key Key which will be used for encryption
      * @return void
-     * @access public    
+     * @access public
      */
-    public function key($key) 
+    public function key($key)
     {
         $this->_initializeKey($key);
     }
-    
-    
+
+
     /**
      * The only way for retrieving the encryption key
      *
      * @param string $property Only property 'key' is supported
-     * @return string Enecryption key 
+     * @return string Enecryption key
      * @access private
      */
     public function __get($property)
@@ -174,7 +174,7 @@ final class Crypt_Rc4 {
                 break;
         }
     }
-    
+
     /**
      * Alternative way to set the encryption key
      *
@@ -195,21 +195,25 @@ final class Crypt_Rc4 {
     // PROTECTED FUNCTIONS
 
     /**
-     * (en/de) crypt function. 
+     * (en/de) crypt function.
      * Function can be used for encrypting and decrypting a message
      *
      * @param  string $paramstr string that will encrypted
      * @return Encrypted or decrypted message
      * @access private
      */
-    private function _crypt($paramstr) 
+    private function _crypt($paramstr)
     {
         //Init key for every call, Bugfix for PHP issue #22316
+        $temp_matrix = $this->s;
+        $this->i = 0;
+        $this->j = 0;
+
         $this->_initializeKey($this->key);
 
         //length of message
         $len= strlen($paramstr);
-        
+
         //Encrypt message
         for ($c= 0; $c < $len; $c++) {
             $this->i = ($this->i + 1) % 256;
@@ -222,7 +226,8 @@ final class Crypt_Rc4 {
 
             $paramstr[$c] = chr(ord($paramstr[$c]) ^ $this->s[$t]);
         }
-        
+
+        $this->s = $temp_matrix;
         return $paramstr;
     }
 
@@ -234,17 +239,17 @@ final class Crypt_Rc4 {
      * @access private
      * @todo   Implement error handling!
      */
-    private function _initializeKey($key) 
+    private function _initializeKey($key)
     {
         //better string validation
         if ( is_string($key) && strlen($key) > 0 ) {
-        
+
             //Only initialize key if it's different
             if ($key != $this->key) {
                 $this->key = $key;
 
                 $len= strlen($key);
-        
+
                 //Create array matrix
                 for ($this->i = 0; $this->i < 256; $this->i++) {
                     $this->s[$this->i] = $this->i;
@@ -252,7 +257,7 @@ final class Crypt_Rc4 {
 
                 //Initialize encryption matrix
                 $this->j = 0;
-                
+
                 for ($this->i = 0; $this->i < 256; $this->i++) {
                     $this->j = ($this->j + $this->s[$this->i] + ord($key[$this->i % $len])) % 256;
                     $t = $this->s[$this->i];
