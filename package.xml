@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!DOCTYPE package SYSTEM "http://pear.php.net/dtd/package-1.0">
+<!-- do not use the "Type" attribute here, that one is only for
+     generated package.xml files -->
+<package version="1.0">
+  <name>Crypt_RC4</name>
+  <description>RC4 encryption class</description>
+  <summary>Encryption class for RC4 encryption</summary>
+  <maintainers>
+    <maintainer>
+      <user>zyprexia</user>
+      <name>Dave Mertens</name>
+      <email>zyprexia@php.net</email>
+    </maintainer>
+  </maintainers>
+  <release>
+    <version>1.0.2</version>
+    <license>PHP</license>
+    <state>stable</state>
+    <date>2003-10-20</date>
+    <notes>
+    	Bugfix release: This version should prevent/solve the problems with the undefined index with some pear installers
+    </notes>
+    <filelist>
+     <dir name="/" baseinstalldir="Crypt">
+      <file role="php">Rc4.php</file>
+     </dir>
+    </filelist>
+  </release>
+</package>
