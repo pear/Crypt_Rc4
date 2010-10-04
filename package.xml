@@ -1,30 +1,75 @@
-<?xml version="1.0" encoding="ISO-8859-1" ?>
-<!DOCTYPE package SYSTEM "http://pear.php.net/dtd/package-1.0">
-<!-- do not use the "Type" attribute here, that one is only for
-     generated package.xml files -->
-<package version="1.0">
-  <name>Crypt_RC4</name>
-  <description>RC4 encryption class</description>
-  <summary>Encryption class for RC4 encryption</summary>
-  <maintainers>
-    <maintainer>
-      <user>zyprexia</user>
-      <name>Dave Mertens</name>
-      <email>zyprexia@php.net</email>
-    </maintainer>
-  </maintainers>
+<?xml version="1.0" encoding="UTF-8"?>
+<package packagerversion="1.9.0" version="2.0" xmlns="http://pear.php.net/dtd/package-2.0" xmlns:tasks="http://pear.php.net/dtd/tasks-1.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://pear.php.net/dtd/tasks-1.0 http://pear.php.net/dtd/tasks-1.0.xsd http://pear.php.net/dtd/package-2.0 http://pear.php.net/dtd/package-2.0.xsd">
+ <name>Crypt_RC4</name>
+ <channel>pear.php.net</channel>
+ <summary>Encryption class for RC4 encryption</summary>
+ <description>RC4 encryption class</description>
+ <lead>
+  <name>Dave Mertens</name>
+  <user>zyprexia</user>
+  <email>zyprexia@php.net</email>
+  <active>yes</active>
+ </lead>
+ <date>2010-10-04</date>
+ <time>23:40:40</time>
+ <version>
+  <release>1.0.3</release>
+  <api>1.0.2</api>
+ </version>
+ <stability>
+  <release>stable</release>
+  <api>stable</api>
+ </stability>
+ <license uri="http://www.php.net/license">PHP</license>
+ <notes>
+Bugfix release: This version should prevent/solve the problems with the undefined index with some pear installers
+ </notes>
+ <contents>
+  <dir baseinstalldir="/" name="/">
+   <file baseinstalldir="/" md5sum="cf4f9a52035a73f5ec2326aa21c38ab2" name="Crypt/Rc4.php" role="php" />
+  </dir>
+ </contents>
+ <dependencies>
+  <required>
+   <php>
+    <min>4.0.0</min>
+   </php>
+   <pearinstaller>
+    <min>1.4.0b1</min>
+   </pearinstaller>
+  </required>
+ </dependencies>
+ <phprelease />
+ <changelog>
   <release>
-    <version>1.0.2</version>
-    <license>PHP</license>
-    <state>stable</state>
-    <date>2003-10-20</date>
-    <notes>
-    	Bugfix release: This version should prevent/solve the problems with the undefined index with some pear installers
-    </notes>
-    <filelist>
-     <dir name="/" baseinstalldir="Crypt">
-      <file role="php">Rc4.php</file>
-     </dir>
-    </filelist>
+   <version>
+    <release>1.0.2</release>
+    <api>1.0.2</api>
+   </version>
+   <stability>
+    <release>stable</release>
+    <api>stable</api>
+   </stability>
+   <date>2010-10-04</date>
+   <license uri="http://www.php.net/license">PHP</license>
+   <notes>
+Bugfix release: This version should prevent/solve the problems with the undefined index with some pear installers
+   </notes>
   </release>
+  <release>
+   <version>
+    <release>1.0.3</release>
+    <api>1.0.2</api>
+   </version>
+   <stability>
+    <release>stable</release>
+    <api>stable</api>
+   </stability>
+   <date>2010-10-04</date>
+   <license uri="http://www.php.net/license">PHP</license>
+   <notes>
+Bugfix release: This version should prevent/solve the problems with the undefined index with some pear installers
+   </notes>
+  </release>
+ </changelog>
 </package>
